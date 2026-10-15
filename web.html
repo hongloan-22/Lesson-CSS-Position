@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoạt Hình Vui Vẻ</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 70px;
+            background-color: #202c45;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px #0002;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ffd43b;
+            white-space: nowrap;
+        }
+
+        .head-link {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .head-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .head-link a:hover {
+            color: #ffd43b;
+            font-weight: bold;
+        }
+
+        /* PHẦN GIỚI THIỆU */
+        .banner {
+            margin-top: 70px;
+            padding: 25px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #5b8def, #8e63ce);
+            color: white;
+        }
+
+        .banner h1 {
+            margin: 0 0 10px;
+        }
+
+        .banner p {
+            margin: 0;
+        }
+
+        /* BỘ LỌC VÀ TÌM KIẾM */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .toolbar input,
+        .toolbar select {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        /* BỐ CỤC CHÍNH */
+        .content {
+            display: grid;
+            grid-template-columns: 320px minmax(0, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 30px;
+            align-items: start;
+        }
+
+        /* DANH SÁCH PHIM BÊN TRÁI */
+        .left-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #0001;
+        }
+
+        .left-content h2,
+        .right-content h2 {
+            margin-top: 0;
+            color: #202c45;
+        }
+
+        .movie-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .movie-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .movie-item:hover,
+        .movie-item.active {
+            background-color: #eaf1ff;
+            border-color: #5b8def;
+        }
+
+        .movie-thumb {
+            width: 105px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #ddd;
+            flex-shrink: 0;
+        }
+
+        .movie-info h3 {
+            margin: 3px 0 8px;
+            font-size: 15px;
+        }
+
+        .movie-info p {
+            margin: 4px 0;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 6px;
+            background-color: #e3f8e8;
+            color: #16733a;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        /* KHU VỰC XEM PHIM */
+        .right-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #0001;
+            min-width: 0;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .movie-description {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .notice {
+            margin-top: 15px;
+            padding: 12px;
+            border-left: 4px solid #5b8def;
+            background-color: #eef4ff;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* PHIM GỢI Ý */
+        .suggestions {
+            margin-top: 25px;
+        }
+
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .suggestion-card {
+            padding: 12px;
+            background-color: #f5f7fb;
+            border-radius: 8px;
+        }
+
+        .suggestion-card h3 {
+            font-size: 14px;
+            margin: 0 0 8px;
+        }
+
+        .suggestion-card p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 25px 15px;
+            background-color: #202c45;
+            color: white;
+            line-height: 1.8;
+        }
+
+        .footer p {
+            margin: 5px;
+        }
+
+        .empty-message {
+            color: #777;
+            text-align: center;
+            padding: 20px 5px;
+        }
+
+        /* TABLET */
+        @media (max-width: 900px) {
+            .header {
+                padding: 12px 18px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .head-link {
+                gap: 12px;
+            }
+
+            .content {
+                grid-template-columns: 260px minmax(0, 1fr);
+                gap: 15px;
+            }
+
+            .movie-thumb {
+                width: 80px;
+                height: 65px;
+            }
+
+            .suggestion-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ĐIỆN THOẠI */
+        @media (max-width: 650px) {
+            .header {
+                position: fixed;
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px 10px;
+            }
+
+            .head-link {
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .head-link a {
+                font-size: 14px;
+            }
+
+            .banner {
+                margin-top: 110px;
+            }
+
+            .banner h1 {
+                font-size: 23px;
+            }
+
+            .toolbar {
+                padding: 15px;
+            }
+
+            .toolbar input,
+            .toolbar select {
+                width: 100%;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                padding: 0 15px 20px;
+            }
+
+            .left-content {
+                order: 2;
+            }
+
+            .right-content {
+                order: 1;
+                padding: 15px;
+            }
+
+            .suggestion-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">🎬 Hoạt Hình Vui Vẻ</div>
+
+        <nav class="head-link">
+            <a href="#">Trang chủ</a>
+            <a href="#danhsach">Danh sách phim</a>
+            <a href="#xemphim">Xem phim</a>
+            <a href="#footer">Liên hệ</a>
+        </nav>
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner">
+        <h1>Thế Giới Hoạt Hình</h1>
+        <p>Khám phá những câu chuyện hoạt hình thú vị dành cho cả gia đình!</p>
+    </section>
+
+    <!-- TÌM KIẾM VÀ SẮP XẾP -->
+    <section class="toolbar">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Tìm phim theo tên..."
+            aria-label="Tìm phim theo tên"
+        >
+
+        <select id="sortSelect" aria-label="Sắp xếp phim">
+            <option value="newest">Mới cập nhật</option>
+            <option value="views">Nhiều lượt xem nhất</option>
+        </select>
+    </section>
+
+    <!-- NỘI DUNG -->
+    <div class="content">
+
+        <!-- DANH SÁCH PHIM -->
+        <aside class="left-content" id="danhsach">
+            <h2>📺 Danh sách phim</h2>
+
+            <div class="movie-list" id="movieList">
+
+                <div class="movie-item active"
+                    data-title="Tom và Jerry"
+                    data-date="3"
+                    data-views="9500"
+                    data-video="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?rel=0"
+                    data-description="Một tuyển tập hoạt hình vui nhộn, phù hợp để minh họa chức năng phát video của website.">
+                    <img class="movie-thumb"
+                        src="https://placehold.co/210x150/7db9e8/ffffff?text=Tom+%26+Jerry"
+                        alt="Ảnh phim Tom và Jerry">
+                    <div class="movie-info">
+                        <h3>Tom và Jerry</h3>
+                        <p>▶ 9.500 lượt xem</p>
+                        <span class="badge">HD</span>
+                    </div>
+                </div>
+
+                <div class="movie-item"
+                    data-title="Thế giới động vật"
+                    data-date="2"
+                    data-views="7200"
+                    data-video="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?rel=0"
+                    data-description="Video minh họa cho mục phim khám phá thế giới tự nhiên.">
+                    <img class="movie-thumb"
+                        src="https://placehold.co/210x150/56b870/ffffff?text=The+Gioi+Dong+Vat"
+                        alt="Ảnh phim Thế giới động vật">
+                    <div class="movie-info">
+                        <h3>Thế giới động vật</h3>
+                        <p>▶ 7.200 lượt xem</p>
+                        <span class="badge">HD</span>
+                    </div>
+                </div>
+
+                <div class="movie-item"
+                    data-title="Cuộc phiêu lưu kỳ thú"
+                    data-date="1"
+                    data-views="12500"
+                    data-video="https://www.youtube-nocookie.com/embed/ysz5S6PUM-U?rel=0"
+                    data-description="Video mẫu cho chuyên mục phiêu lưu, khám phá và học hỏi.">
+                    <img class="movie-thumb"
+                        src="https://placehold.co/210x150/f5b942/ffffff?text=Phieu+Luu"
+                        alt="Ảnh phim Cuộc phiêu lưu kỳ thú">
+                    <div class="movie-info">
+                        <h3>Cuộc phiêu lưu kỳ thú</h3>
+                        <p>▶ 12.500 lượt xem</p>
+                        <span class="badge">HD</span>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- KHU VỰC XEM VIDEO -->
+        <main class="right-content" id="xemphim">
+            <h2 id="videoTitle">Tom và Jerry</h2>
+
+            <div class="video-wrapper" id="videoPlayer">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?rel=0"
+                    title="Video minh họa"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <p class="movie-description" id="videoDescription">
+                Một tuyển tập hoạt hình vui nhộn, phù hợp để minh họa
+                chức năng phát video của website.
+            </p>
+
+            <div class="notice">
+                <strong>📌 Lưu ý:</strong> Đây là website thực hành giao diện.
+                Các video nhúng là video mẫu để kiểm tra chức năng, chưa phải
+                thư viện phim hoạt hình tiếng Việt đã được xác minh.
+            </div>
+
+            <section class="suggestions">
+                <h2>⭐ Khám phá thêm</h2>
+
+                <div class="suggestion-grid">
+                    <div class="suggestion-card">
+                        <h3>🎨 Hoạt hình sáng tạo</h3>
+                        <p>Khám phá thế giới màu sắc và trí tưởng tượng.</p>
+                    </div>
+
+                    <div class="suggestion-card">
+                        <h3>🌳 Khám phá thiên nhiên</h3>
+                        <p>Học thêm kiến thức về thế giới xung quanh.</p>
+                    </div>
+
+                    <div class="suggestion-card">
+                        <h3>🚀 Phiêu lưu kỳ thú</h3>
+                        <p>Cùng khám phá những điều mới mẻ.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer">
+        <p><strong>🎬 Hoạt Hình Vui Vẻ</strong></p>
+        <p>Website thực hành HTML, CSS và JavaScript</p>
+        <p>© 2026 - Bản quyền thuộc về người xây dựng website.</p>
+    </footer>
+
+    <script>
+        const movieList = document.getElementById("movieList");
+        const searchInput = document.getElementById("searchInput");
+        const sortSelect = document.getElementById("sortSelect");
+        const videoTitle = document.getElementById("videoTitle");
+        const videoDescription = document.getElementById("videoDescription");
+        const videoPlayer = document.getElementById("videoPlayer");
+
+        // Chọn phim và phát video tương ứng
+        movieList.addEventListener("click", function(event) {
+            const movie = event.target.closest(".movie-item");
+
+            if (!movie) return;
+
+            document.querySelectorAll(".movie-item").forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            movie.classList.add("active");
+
+            videoTitle.textContent = movie.dataset.title;
+            videoDescription.textContent = movie.dataset.description;
+
+            // Dùng iframe để nhúng video YouTube
+            videoPlayer.innerHTML = `
+                <iframe
+                    src="${movie.dataset.video}"
+                    title="${movie.dataset.title}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            `;
+
+            if (window.innerWidth <= 650) {
+                document.getElementById("xemphim").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        });
+
+        // Tìm phim theo tên
+        searchInput.addEventListener("input", function() {
+            const keyword = searchInput.value.toLowerCase().trim();
+
+            document.querySelectorAll(".movie-item").forEach(function(movie) {
+                const title = movie.dataset.title.toLowerCase();
+                movie.style.display = title.includes(keyword) ? "flex" : "none";
+            });
+        });
+
+        // Sắp xếp phim theo lượt xem hoặc ngày cập nhật
+        sortSelect.addEventListener("change", function() {
+            const movies = Array.from(
+                movieList.querySelectorAll(".movie-item")
+            );
+
+            movies.sort(function(a, b) {
+                if (sortSelect.value === "views") {
+                    return Number(b.dataset.views) - Number(a.dataset.views);
+                }
+
+                return Number(b.dataset.date) - Number(a.dataset.date);
+            });
+
+            movies.forEach(function(movie) {
+                movieList.appendChild(movie);
+            });
+        });
+    </script>
+
+</body>
+</html>
