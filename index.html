@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo menu ngang Dropdown</title>
+
+    <style>
+        /* Định dạng chung cho trang web */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            color: #333333;
+            text-align: center;
+        }
+
+        /* Khung menu */
+        #menu {
+            height: 40px;
+            background-color: black;
+            border: 1px solid #333333;
+            margin: 20px auto;
+        }
+
+        /* Danh sách menu cấp 1 */
+        #menu ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        #menu > ul > li {
+            float: left;
+            position: relative;
+        }
+
+        /* Các liên kết trong menu */
+        #menu a {
+            display: block;
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Đổi màu khi di chuột vào liên kết */
+        #menu a:hover {
+            background-color: red;
+        }
+
+        /* Menu con */
+        #menu ul ul {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: black;
+            visibility: hidden;
+            z-index: 10;
+        }
+
+        /* Hiển thị menu con khi di chuột vào mục cha */
+        #menu ul li:hover > ul {
+            visibility: visible;
+        }
+
+        /* Giữ các mục trong menu con theo chiều dọc */
+        #menu ul ul li {
+            float: none;
+            position: relative;
+        }
+
+        /* Định dạng tiêu đề menu con */
+        #menu ul ul a {
+            width: 150px;
+            text-align: left;
+            padding-left: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Menu ngang Dropdown</h1>
+
+    <div id="menu">
+        <ul>
+            <li><a href="#">Trang chủ</a></li>
+
+            <li>
+                <a href="#">Sản phẩm</a>
+                <ul>
+                    <li><a href="#">Điện thoại</a></li>
+                    <li><a href="#">Máy tính</a></li>
+                    <li><a href="#">Máy tính bảng</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Dịch vụ</a>
+                <ul>
+                    <li><a href="#">Thiết kế website</a></li>
+                    <li><a href="#">Bảo trì</a></li>
+                    <li><a href="#">Tư vấn</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Giới thiệu</a></li>
+
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>
